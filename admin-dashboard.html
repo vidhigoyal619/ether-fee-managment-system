@@ -1,0 +1,695 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ether Admin - Fee Management Dashboard</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/lucide/0.263.1/lucide.min.css">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-brand">
+                <div class="logo">
+                    <div class="logo-icon">E</div>
+                    <span class="logo-text">Ether</span>
+                </div>
+            </div>
+            
+            <div class="nav-tabs">
+                <button class="nav-tab active" data-tab="dashboard">
+                    <i class="lucide lucide-bar-chart-2"></i>
+                    Dashboard
+                </button>
+                <button class="nav-tab" data-tab="defaulters">
+                    <i class="lucide lucide-alert-triangle"></i>
+                    Defaulters
+                </button>
+                <button class="nav-tab" data-tab="parents">
+                    <i class="lucide lucide-users"></i>
+                    Parent View
+                </button>
+                <button class="nav-tab" data-tab="settings">
+                    <i class="lucide lucide-settings"></i>
+                    Settings
+                </button>
+            </div>
+            
+            <div class="nav-actions">
+                <button class="notification-btn">
+                    <i class="lucide lucide-bell"></i>
+                    <span class="notification-badge">3</span>
+                </button>
+                <div class="profile-dropdown">
+                    <button class="profile-btn">
+                        <img src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=32&h=32&fit=crop&crop=face" alt="Profile" class="profile-avatar">
+                        <span class="profile-name">Admin User</span>
+                        <i class="lucide lucide-chevron-down"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <div class="container">
+            <!-- Dashboard Tab Content -->
+            <div class="tab-content active" id="dashboard">
+                <!-- Page Header -->
+                <div class="page-header">
+                    <div class="page-title">
+                        <h1>Fee Management Dashboard</h1>
+                        <p class="page-subtitle">Monitor fee collection and manage defaulters across all classes</p>
+                    </div>
+                    <div class="page-actions">
+                        <button class="btn-secondary">
+                            <i class="lucide lucide-download"></i>
+                            Export Report
+                        </button>
+                        <button class="btn-primary" onclick="openReminderModal()">
+                            <i class="lucide lucide-send"></i>
+                            Send Reminders
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Analytics Cards -->
+                <div class="analytics-grid">
+                    <div class="card card-analytics">
+                        <div class="card-header">
+                            <div class="card-icon success">
+                                <i class="lucide lucide-check-circle"></i>
+                            </div>
+                            <div class="card-info">
+                                <h3>Total Collected</h3>
+                                <p class="card-subtitle">This Academic Year</p>
+                            </div>
+                        </div>
+                        <div class="card-metric">
+                            <span class="metric-value">₹2,45,800</span>
+                            <span class="metric-change positive">+12.5%</span>
+                        </div>
+                    </div>
+
+                    <div class="card card-analytics">
+                        <div class="card-header">
+                            <div class="card-icon warning">
+                                <i class="lucide lucide-clock"></i>
+                            </div>
+                            <div class="card-info">
+                                <h3>Pending Fees</h3>
+                                <p class="card-subtitle">Overdue Payments</p>
+                            </div>
+                        </div>
+                        <div class="card-metric">
+                            <span class="metric-value">₹45,200</span>
+                            <span class="metric-change negative">-8.2%</span>
+                        </div>
+                    </div>
+
+                    <div class="card card-analytics">
+                        <div class="card-header">
+                            <div class="card-icon info">
+                                <i class="lucide lucide-users"></i>
+                            </div>
+                            <div class="card-info">
+                                <h3>Total Students</h3>
+                                <p class="card-subtitle">Enrolled Students</p>
+                            </div>
+                        </div>
+                        <div class="card-metric">
+                            <span class="metric-value">1,247</span>
+                            <span class="metric-change positive">+3.1%</span>
+                        </div>
+                    </div>
+
+                    <div class="card card-analytics">
+                        <div class="card-header">
+                            <div class="card-icon error">
+                                <i class="lucide lucide-alert-triangle"></i>
+                            </div>
+                            <div class="card-info">
+                                <h3>Defaulters</h3>
+                                <p class="card-subtitle">Overdue > 30 days</p>
+                            </div>
+                        </div>
+                        <div class="card-metric">
+                            <span class="metric-value">23</span>
+                            <span class="metric-change negative">+2</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Quick Actions -->
+                <div class="quick-actions">
+                    <h2>Quick Actions</h2>
+                    <div class="actions-grid">
+                        <button class="action-card" onclick="openReminderModal()">
+                            <div class="action-icon">
+                                <i class="lucide lucide-bell"></i>
+                            </div>
+                            <h3>Send Reminders</h3>
+                            <p>Notify parents about pending fees</p>
+                        </button>
+                        
+                        <button class="action-card" onclick="showDefaulters()">
+                            <div class="action-icon">
+                                <i class="lucide lucide-search"></i>
+                            </div>
+                            <h3>View Defaulters</h3>
+                            <p>Students with overdue payments</p>
+                        </button>
+                        
+                        <button class="action-card">
+                            <div class="action-icon">
+                                <i class="lucide lucide-file-text"></i>
+                            </div>
+                            <h3>Generate Reports</h3>
+                            <p>Create detailed fee reports</p>
+                        </button>
+                        
+                        <button class="action-card">
+                            <div class="action-icon">
+                                <i class="lucide lucide-settings"></i>
+                            </div>
+                            <h3>Fee Settings</h3>
+                            <p>Configure fee structure</p>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Recent Activity -->
+                <div class="recent-activity">
+                    <h2>Recent Fee Payments</h2>
+                    <div class="activity-list">
+                        <div class="activity-item">
+                            <div class="activity-icon success">
+                                <i class="lucide lucide-check-circle"></i>
+                            </div>
+                            <div class="activity-content">
+                                <h4>Payment Received</h4>
+                                <p>₹12,500 from Rajesh Kumar (Grade 10-A)</p>
+                                <span class="activity-time">2 minutes ago</span>
+                            </div>
+                        </div>
+                        
+                        <div class="activity-item">
+                            <div class="activity-icon warning">
+                                <i class="lucide lucide-clock"></i>
+                            </div>
+                            <div class="activity-content">
+                                <h4>Reminder Sent</h4>
+                                <p>Fee reminder sent to 15 parents</p>
+                                <span class="activity-time">1 hour ago</span>
+                            </div>
+                        </div>
+                        
+                        <div class="activity-item">
+                            <div class="activity-icon error">
+                                <i class="lucide lucide-alert-triangle"></i>
+                            </div>
+                            <div class="activity-content">
+                                <h4>Payment Failed</h4>
+                                <p>₹8,200 payment failed for Priya Sharma (Grade 8-B)</p>
+                                <span class="activity-time">3 hours ago</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Defaulters Tab Content -->
+            <div class="tab-content" id="defaulters">
+                <div class="page-header">
+                    <div class="page-title">
+                        <h1>Defaulters Management</h1>
+                        <p class="page-subtitle">Track and manage students with overdue fees</p>
+                    </div>
+                    <div class="page-actions">
+                        <button class="btn-secondary">
+                            <i class="lucide lucide-filter"></i>
+                            Filter
+                        </button>
+                        <button class="btn-primary" onclick="sendBulkReminders()">
+                            <i class="lucide lucide-send"></i>
+                            Send Bulk Reminders
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Defaulter Filters -->
+                <div class="filter-section">
+                    <div class="filter-group">
+                        <label>Class</label>
+                        <select class="input">
+                            <option>All Classes</option>
+                            <option>Grade 10-A</option>
+                            <option>Grade 10-B</option>
+                            <option>Grade 9-A</option>
+                            <option>Grade 9-B</option>
+                        </select>
+                    </div>
+                    <div class="filter-group">
+                        <label>Overdue Period</label>
+                        <select class="input">
+                            <option>All Periods</option>
+                            <option>1-7 days</option>
+                            <option>8-30 days</option>
+                            <option>30+ days</option>
+                        </select>
+                    </div>
+                    <div class="filter-group">
+                        <label>Amount Range</label>
+                        <select class="input">
+                            <option>All Amounts</option>
+                            <option>₹0 - ₹5,000</option>
+                            <option>₹5,000 - ₹10,000</option>
+                            <option>₹10,000+</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- Defaulters Table -->
+                <div class="table-container">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>
+                                    <input type="checkbox" class="checkbox" id="selectAll">
+                                    <label for="selectAll"></label>
+                                </th>
+                                <th>Student Name</th>
+                                <th>Parent Name</th>
+                                <th>Class</th>
+                                <th>Overdue Amount</th>
+                                <th>Days Overdue</th>
+                                <th>Status</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>
+                                    <input type="checkbox" class="checkbox" id="student1">
+                                    <label for="student1"></label>
+                                </td>
+                                <td>
+                                    <div class="student-info">
+                                        <div class="student-avatar">AS</div>
+                                        <div>
+                                            <div class="student-name">Arjun Sharma</div>
+                                            <div class="student-id">ID: 2024001</div>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td>Rajesh Sharma</td>
+                                <td>Grade 10-A</td>
+                                <td class="amount">₹12,500</td>
+                                <td class="overdue-days">
+                                    <span class="badge badge-overdue">45 days</span>
+                                </td>
+                                <td>
+                                    <span class="badge badge-overdue">Overdue</span>
+                                </td>
+                                <td>
+                                    <div class="action-buttons">
+                                        <button class="btn-ghost" onclick="sendReminder('student1')">
+                                            <i class="lucide lucide-bell"></i>
+                                            Remind
+                                        </button>
+                                        <button class="btn-ghost" onclick="viewDetails('student1')">
+                                            <i class="lucide lucide-eye"></i>
+                                            View
+                                        </button>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <input type="checkbox" class="checkbox" id="student2">
+                                    <label for="student2"></label>
+                                </td>
+                                <td>
+                                    <div class="student-info">
+                                        <div class="student-avatar">PS</div>
+                                        <div>
+                                            <div class="student-name">Priya Singh</div>
+                                            <div class="student-id">ID: 2024002</div>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td>Sunita Singh</td>
+                                <td>Grade 9-B</td>
+                                <td class="amount">₹8,200</td>
+                                <td class="overdue-days">
+                                    <span class="badge badge-due">15 days</span>
+                                </td>
+                                <td>
+                                    <span class="badge badge-due">Due</span>
+                                </td>
+                                <td>
+                                    <div class="action-buttons">
+                                        <button class="btn-ghost" onclick="sendReminder('student2')">
+                                            <i class="lucide lucide-bell"></i>
+                                            Remind
+                                        </button>
+                                        <button class="btn-ghost" onclick="viewDetails('student2')">
+                                            <i class="lucide lucide-eye"></i>
+                                            View
+                                        </button>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <input type="checkbox" class="checkbox" id="student3">
+                                    <label for="student3"></label>
+                                </td>
+                                <td>
+                                    <div class="student-info">
+                                        <div class="student-avatar">VK</div>
+                                        <div>
+                                            <div class="student-name">Vikram Kumar</div>
+                                            <div class="student-id">ID: 2024003</div>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td>Anita Kumar</td>
+                                <td>Grade 8-A</td>
+                                <td class="amount">₹15,800</td>
+                                <td class="overdue-days">
+                                    <span class="badge badge-overdue">62 days</span>
+                                </td>
+                                <td>
+                                    <span class="badge badge-overdue">Overdue</span>
+                                </td>
+                                <td>
+                                    <div class="action-buttons">
+                                        <button class="btn-ghost" onclick="sendReminder('student3')">
+                                            <i class="lucide lucide-bell"></i>
+                                            Remind
+                                        </button>
+                                        <button class="btn-ghost" onclick="viewDetails('student3')">
+                                            <i class="lucide lucide-eye"></i>
+                                            View
+                                        </button>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Parent View Tab Content -->
+            <div class="tab-content" id="parents">
+                <div class="page-header">
+                    <div class="page-title">
+                        <h1>Parent Payment View</h1>
+                        <p class="page-subtitle">Monitor how parents experience the payment process</p>
+                    </div>
+                </div>
+
+                <!-- Parent Payment Analytics -->
+                <div class="analytics-grid">
+                    <div class="card card-analytics">
+                        <div class="card-header">
+                            <div class="card-icon success">
+                                <i class="lucide lucide-credit-card"></i>
+                            </div>
+                            <div class="card-info">
+                                <h3>Payment Success Rate</h3>
+                                <p class="card-subtitle">Completed Transactions</p>
+                            </div>
+                        </div>
+                        <div class="card-metric">
+                            <span class="metric-value">94.2%</span>
+                            <span class="metric-change positive">+2.1%</span>
+                        </div>
+                    </div>
+
+                    <div class="card card-analytics">
+                        <div class="card-header">
+                            <div class="card-icon warning">
+                                <i class="lucide lucide-clock"></i>
+                            </div>
+                            <div class="card-info">
+                                <h3>Average Payment Time</h3>
+                                <p class="card-subtitle">From login to completion</p>
+                            </div>
+                        </div>
+                        <div class="card-metric">
+                            <span class="metric-value">3.2 min</span>
+                            <span class="metric-change negative">+0.3 min</span>
+                        </div>
+                    </div>
+
+                    <div class="card card-analytics">
+                        <div class="card-header">
+                            <div class="card-icon info">
+                                <i class="lucide lucide-smartphone"></i>
+                            </div>
+                            <div class="card-info">
+                                <h3>Mobile Usage</h3>
+                                <p class="card-subtitle">Payments via mobile</p>
+                            </div>
+                        </div>
+                        <div class="card-metric">
+                            <span class="metric-value">78.5%</span>
+                            <span class="metric-change positive">+5.2%</span>
+                        </div>
+                    </div>
+
+                    <div class="card card-analytics">
+                        <div class="card-header">
+                            <div class="card-icon error">
+                                <i class="lucide lucide-x-circle"></i>
+                            </div>
+                            <div class="card-info">
+                                <h3>Drop-off Rate</h3>
+                                <p class="card-subtitle">Incomplete payments</p>
+                            </div>
+                        </div>
+                        <div class="card-metric">
+                            <span class="metric-value">5.8%</span>
+                            <span class="metric-change negative">+1.2%</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Payment Flow Insights -->
+                <div class="insights-section">
+                    <h2>Payment Flow Insights</h2>
+                    <div class="insights-grid">
+                        <div class="card">
+                            <h3>Common Drop-off Points</h3>
+                            <div class="dropoff-list">
+                                <div class="dropoff-item">
+                                    <div class="dropoff-point">Payment Method Selection</div>
+                                    <div class="dropoff-percentage">32%</div>
+                                </div>
+                                <div class="dropoff-item">
+                                    <div class="dropoff-point">Amount Verification</div>
+                                    <div class="dropoff-percentage">28%</div>
+                                </div>
+                                <div class="dropoff-item">
+                                    <div class="dropoff-point">OTP Verification</div>
+                                    <div class="dropoff-percentage">25%</div>
+                                </div>
+                                <div class="dropoff-item">
+                                    <div class="dropoff-point">Payment Processing</div>
+                                    <div class="dropoff-percentage">15%</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="card">
+                            <h3>Parent Feedback</h3>
+                            <div class="feedback-list">
+                                <div class="feedback-item positive">
+                                    <div class="feedback-icon">
+                                        <i class="lucide lucide-thumbs-up"></i>
+                                    </div>
+                                    <div class="feedback-content">
+                                        <p>"Very easy to use, payment completed in 2 minutes!"</p>
+                                        <span class="feedback-author">- Sunita Kumar</span>
+                                    </div>
+                                </div>
+                                <div class="feedback-item negative">
+                                    <div class="feedback-icon">
+                                        <i class="lucide lucide-thumbs-down"></i>
+                                    </div>
+                                    <div class="feedback-content">
+                                        <p>"Confusing payment options, took too long to find UPI"</p>
+                                        <span class="feedback-author">- Rajesh Patel</span>
+                                    </div>
+                                </div>
+                                <div class="feedback-item positive">
+                                    <div class="feedback-icon">
+                                        <i class="lucide lucide-thumbs-up"></i>
+                                    </div>
+                                    <div class="feedback-content">
+                                        <p>"Great app, but wish there was a save payment method option"</p>
+                                        <span class="feedback-author">- Priya Sharma</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Settings Tab Content -->
+            <div class="tab-content" id="settings">
+                <div class="page-header">
+                    <div class="page-title">
+                        <h1>System Settings</h1>
+                        <p class="page-subtitle">Configure fee management and notification settings</p>
+                    </div>
+                </div>
+
+                <div class="settings-grid">
+                    <div class="card">
+                        <h3>Fee Structure</h3>
+                        <div class="setting-item">
+                            <label>Academic Year</label>
+                            <select class="input">
+                                <option>2024-25</option>
+                                <option>2023-24</option>
+                            </select>
+                        </div>
+                        <div class="setting-item">
+                            <label>Default Due Date</label>
+                            <input type="date" class="input" value="2024-02-15">
+                        </div>
+                        <div class="setting-item">
+                            <label>Late Fee Percentage</label>
+                            <input type="number" class="input" value="2" placeholder="2%">
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <h3>Notification Settings</h3>
+                        <div class="setting-item">
+                            <label class="checkbox-label">
+                                <input type="checkbox" checked>
+                                <span class="checkmark"></span>
+                                Send automatic reminders
+                            </label>
+                        </div>
+                        <div class="setting-item">
+                            <label>Reminder Frequency</label>
+                            <select class="input">
+                                <option>Daily</option>
+                                <option>Weekly</option>
+                                <option>Bi-weekly</option>
+                            </select>
+                        </div>
+                        <div class="setting-item">
+                            <label>Reminder Channels</label>
+                            <div class="checkbox-group">
+                                <label class="checkbox-label">
+                                    <input type="checkbox" checked>
+                                    <span class="checkmark"></span>
+                                    SMS
+                                </label>
+                                <label class="checkbox-label">
+                                    <input type="checkbox" checked>
+                                    <span class="checkmark"></span>
+                                    Email
+                                </label>
+                                <label class="checkbox-label">
+                                    <input type="checkbox">
+                                    <span class="checkmark"></span>
+                                    WhatsApp
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Reminder Modal -->
+    <div class="modal" id="reminderModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Send Fee Reminder</h2>
+                <button class="modal-close" onclick="closeReminderModal()">
+                    <i class="lucide lucide-x"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label>Recipients</label>
+                    <div class="recipient-list">
+                        <div class="recipient-item">
+                            <input type="checkbox" id="recipient1" checked>
+                            <label for="recipient1">
+                                <span class="recipient-name">Rajesh Sharma</span>
+                                <span class="recipient-info">Parent of Arjun Sharma (Grade 10-A)</span>
+                            </label>
+                        </div>
+                        <div class="recipient-item">
+                            <input type="checkbox" id="recipient2" checked>
+                            <label for="recipient2">
+                                <span class="recipient-name">Sunita Singh</span>
+                                <span class="recipient-info">Parent of Priya Singh (Grade 9-B)</span>
+                            </label>
+                        </div>
+                        <div class="recipient-item">
+                            <input type="checkbox" id="recipient3">
+                            <label for="recipient3">
+                                <span class="recipient-name">Anita Kumar</span>
+                                <span class="recipient-info">Parent of Vikram Kumar (Grade 8-A)</span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label>Message Template</label>
+                    <select class="input">
+                        <option>Standard Reminder</option>
+                        <option>Urgent Payment Required</option>
+                        <option>Final Notice</option>
+                        <option>Custom Message</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label>Custom Message (Optional)</label>
+                    <textarea class="input" rows="4" placeholder="Enter your custom message here..."></textarea>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn-secondary" onclick="closeReminderModal()">Cancel</button>
+                <button class="btn-primary" onclick="sendReminders()">
+                    <i class="lucide lucide-send"></i>
+                    Send Reminders
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Success Toast -->
+    <div class="toast" id="successToast">
+        <div class="toast-content">
+            <div class="toast-icon success">
+                <i class="lucide lucide-check-circle"></i>
+            </div>
+            <div class="toast-message">
+                <h4>Reminders Sent Successfully!</h4>
+                <p>3 reminders have been sent to parents</p>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

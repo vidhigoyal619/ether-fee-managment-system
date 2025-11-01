@@ -1,0 +1,473 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ether Parent App - Fee Payment</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/lucide/0.263.1/lucide.min.css">
+    <link rel="stylesheet" href="parent-styles.css">
+</head>
+<body>
+    <!-- Mobile Navigation -->
+    <nav class="mobile-nav">
+        <div class="nav-container">
+            <button class="back-btn" onclick="goBack()">
+                <i class="lucide lucide-arrow-left"></i>
+            </button>
+            <div class="nav-title">Fee Payment</div>
+            <button class="help-btn" onclick="showHelp()">
+                <i class="lucide lucide-help-circle"></i>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Progress Indicator -->
+    <div class="progress-container">
+        <div class="progress-bar">
+            <div class="progress-step active" data-step="1">
+                <div class="step-number">1</div>
+                <div class="step-label">Details</div>
+            </div>
+            <div class="progress-line active"></div>
+            <div class="progress-step" data-step="2">
+                <div class="step-number">2</div>
+                <div class="step-label">Payment</div>
+            </div>
+            <div class="progress-line"></div>
+            <div class="progress-step" data-step="3">
+                <div class="step-number">3</div>
+                <div class="step-label">Confirm</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <main class="parent-content">
+        <!-- Step 1: Fee Details -->
+        <div class="payment-step active" id="step1">
+            <div class="step-header">
+                <h1>Fee Details</h1>
+                <p>Review your child's fee information and payment amount</p>
+            </div>
+
+            <!-- Student Info Card -->
+            <div class="card student-card">
+                <div class="student-header">
+                    <div class="student-avatar">AS</div>
+                    <div class="student-info">
+                        <h3>Arjun Sharma</h3>
+                        <p>Grade 10-A • Student ID: 2024001</p>
+                    </div>
+                    <div class="student-status">
+                        <span class="badge badge-due">Fee Due</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Fee Breakdown -->
+            <div class="card fee-breakdown">
+                <h3>Fee Breakdown</h3>
+                <div class="fee-list">
+                    <div class="fee-item">
+                        <div class="fee-label">
+                            <span class="fee-name">Tuition Fee</span>
+                            <span class="fee-period">April 2024</span>
+                        </div>
+                        <div class="fee-amount">₹8,500</div>
+                    </div>
+                    <div class="fee-item">
+                        <div class="fee-label">
+                            <span class="fee-name">Library Fee</span>
+                            <span class="fee-period">Annual</span>
+                        </div>
+                        <div class="fee-amount">₹2,000</div>
+                    </div>
+                    <div class="fee-item">
+                        <div class="fee-label">
+                            <span class="fee-name">Sports Fee</span>
+                            <span class="fee-period">Quarterly</span>
+                        </div>
+                        <div class="fee-amount">₹1,500</div>
+                    </div>
+                    <div class="fee-item">
+                        <div class="fee-label">
+                            <span class="fee-name">Transport Fee</span>
+                            <span class="fee-period">Monthly</span>
+                        </div>
+                        <div class="fee-amount">₹1,200</div>
+                    </div>
+                    <div class="fee-item late-fee">
+                        <div class="fee-label">
+                            <span class="fee-name">Late Fee</span>
+                            <span class="fee-period">Overdue 15 days</span>
+                        </div>
+                        <div class="fee-amount">₹266</div>
+                    </div>
+                </div>
+                
+                <div class="fee-divider"></div>
+                
+                <div class="fee-total">
+                    <div class="total-label">Total Amount</div>
+                    <div class="total-amount">₹13,466</div>
+                </div>
+            </div>
+
+            <!-- Payment Options Preview -->
+            <div class="card payment-preview">
+                <h3>Choose Payment Method</h3>
+                <div class="payment-options">
+                    <button class="payment-option" onclick="selectPaymentMethod('upi')">
+                        <div class="option-icon upi">
+                            <i class="lucide lucide-smartphone"></i>
+                        </div>
+                        <div class="option-info">
+                            <h4>UPI Payment</h4>
+                            <p>Pay using UPI apps like GPay, PhonePe</p>
+                        </div>
+                        <div class="option-arrow">
+                            <i class="lucide lucide-chevron-right"></i>
+                        </div>
+                    </button>
+                    
+                    <button class="payment-option" onclick="selectPaymentMethod('card')">
+                        <div class="option-icon card">
+                            <i class="lucide lucide-credit-card"></i>
+                        </div>
+                        <div class="option-info">
+                            <h4>Credit/Debit Card</h4>
+                            <p>Visa, Mastercard, RuPay accepted</p>
+                        </div>
+                        <div class="option-arrow">
+                            <i class="lucide lucide-chevron-right"></i>
+                        </div>
+                    </button>
+                    
+                    <button class="payment-option" onclick="selectPaymentMethod('netbanking')">
+                        <div class="option-icon netbanking">
+                            <i class="lucide lucide-building-2"></i>
+                        </div>
+                        <div class="option-info">
+                            <h4>Net Banking</h4>
+                            <p>Direct bank transfer</p>
+                        </div>
+                        <div class="option-arrow">
+                            <i class="lucide lucide-chevron-right"></i>
+                        </div>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Continue Button -->
+            <div class="step-actions">
+                <button class="btn-primary btn-full" onclick="proceedToPayment()">
+                    Continue to Payment
+                    <i class="lucide lucide-arrow-right"></i>
+                </button>
+            </div>
+        </div>
+
+        <!-- Step 2: Payment Method -->
+        <div class="payment-step" id="step2">
+            <div class="step-header">
+                <h1>Payment Method</h1>
+                <p>Select your preferred payment method</p>
+            </div>
+
+            <!-- Selected Payment Method -->
+            <div class="card selected-method" id="selectedMethod">
+                <div class="method-header">
+                    <div class="method-icon upi">
+                        <i class="lucide lucide-smartphone"></i>
+                    </div>
+                    <div class="method-info">
+                        <h3>UPI Payment</h3>
+                        <p>Pay using UPI apps</p>
+                    </div>
+                    <button class="change-method" onclick="changePaymentMethod()">
+                        <i class="lucide lucide-edit"></i>
+                        Change
+                    </button>
+                </div>
+            </div>
+
+            <!-- UPI Payment Interface -->
+            <div class="card payment-interface" id="upiInterface">
+                <h3>UPI Payment Details</h3>
+                
+                <div class="payment-amount">
+                    <div class="amount-label">Amount to Pay</div>
+                    <div class="amount-value">₹13,466</div>
+                </div>
+
+                <div class="upi-options">
+                    <button class="upi-option" onclick="initiateUPI('gpay')">
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/77/GPay_Logo.svg/512px-GPay_Logo.svg.png" alt="Google Pay" class="upi-logo">
+                        <span>Google Pay</span>
+                    </button>
+                    
+                    <button class="upi-option" onclick="initiateUPI('phonepe')">
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/5c/PhonePe_Logo.svg/512px-PhonePe_Logo.svg.png" alt="PhonePe" class="upi-logo">
+                        <span>PhonePe</span>
+                    </button>
+                    
+                    <button class="upi-option" onclick="initiateUPI('paytm')">
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/42/Paytm_logo.png/512px-Paytm_logo.png" alt="Paytm" class="upi-logo">
+                        <span>Paytm</span>
+                    </button>
+                    
+                    <button class="upi-option" onclick="showUPIId()">
+                        <i class="lucide lucide-qr-code"></i>
+                        <span>Scan QR Code</span>
+                    </button>
+                </div>
+
+                <div class="upi-id-section" id="upiIdSection" style="display: none;">
+                    <div class="upi-id">
+                        <div class="upi-label">UPI ID</div>
+                        <div class="upi-value">school@paytm</div>
+                        <button class="copy-btn" onclick="copyUPIId()">
+                            <i class="lucide lucide-copy"></i>
+                            Copy
+                        </button>
+                    </div>
+                    
+                    <div class="qr-code">
+                        <div class="qr-placeholder">
+                            <i class="lucide lucide-qr-code"></i>
+                            <p>QR Code</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="payment-instructions">
+                    <h4>Payment Instructions</h4>
+                    <ol>
+                        <li>Open your UPI app (Google Pay, PhonePe, etc.)</li>
+                        <li>Enter the UPI ID: <strong>school@paytm</strong></li>
+                        <li>Enter amount: <strong>₹13,466</strong></li>
+                        <li>Add payment description: <strong>Fee Payment - Arjun Sharma</strong></li>
+                        <li>Complete the payment</li>
+                    </ol>
+                </div>
+            </div>
+
+            <!-- Payment Status -->
+            <div class="card payment-status" id="paymentStatus" style="display: none;">
+                <div class="status-icon">
+                    <i class="lucide lucide-clock"></i>
+                </div>
+                <h3>Payment Processing</h3>
+                <p>Please complete the payment in your UPI app and wait for confirmation...</p>
+                <div class="loading-spinner"></div>
+            </div>
+
+            <!-- Action Buttons -->
+            <div class="step-actions">
+                <button class="btn-secondary btn-full" onclick="goToPreviousStep()">
+                    <i class="lucide lucide-arrow-left"></i>
+                    Back
+                </button>
+            </div>
+        </div>
+
+        <!-- Step 3: Confirmation -->
+        <div class="payment-step" id="step3">
+            <div class="step-header">
+                <h1>Payment Confirmation</h1>
+                <p>Verify your payment details</p>
+            </div>
+
+            <!-- Payment Summary -->
+            <div class="card payment-summary">
+                <div class="summary-header">
+                    <div class="success-icon">
+                        <i class="lucide lucide-check-circle"></i>
+                    </div>
+                    <h2>Payment Successful!</h2>
+                    <p>Your fee payment has been processed successfully</p>
+                </div>
+
+                <div class="summary-details">
+                    <div class="detail-item">
+                        <span class="detail-label">Transaction ID</span>
+                        <span class="detail-value">TXN202401151234567</span>
+                    </div>
+                    <div class="detail-item">
+                        <span class="detail-label">Payment Method</span>
+                        <span class="detail-value">UPI - Google Pay</span>
+                    </div>
+                    <div class="detail-item">
+                        <span class="detail-label">Amount Paid</span>
+                        <span class="detail-value">₹13,466</span>
+                    </div>
+                    <div class="detail-item">
+                        <span class="detail-label">Payment Date</span>
+                        <span class="detail-value">15 Jan 2024, 2:30 PM</span>
+                    </div>
+                    <div class="detail-item">
+                        <span class="detail-label">Student</span>
+                        <span class="detail-value">Arjun Sharma (Grade 10-A)</span>
+                    </div>
+                </div>
+
+                <div class="receipt-actions">
+                    <button class="btn-secondary">
+                        <i class="lucide lucide-download"></i>
+                        Download Receipt
+                    </button>
+                    <button class="btn-secondary">
+                        <i class="lucide lucide-share"></i>
+                        Share Receipt
+                    </button>
+                </div>
+            </div>
+
+            <!-- Next Steps -->
+            <div class="card next-steps">
+                <h3>What's Next?</h3>
+                <div class="steps-list">
+                    <div class="step-item">
+                        <div class="step-icon">
+                            <i class="lucide lucide-mail"></i>
+                        </div>
+                        <div class="step-content">
+                            <h4>Receipt Email</h4>
+                            <p>You'll receive a payment receipt via email within 5 minutes</p>
+                        </div>
+                    </div>
+                    <div class="step-item">
+                        <div class="step-icon">
+                            <i class="lucide lucide-calendar"></i>
+                        </div>
+                        <div class="step-content">
+                            <h4>Next Payment Due</h4>
+                            <p>Your next fee payment is due on February 15, 2024</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Action Buttons -->
+            <div class="step-actions">
+                <button class="btn-primary btn-full" onclick="completePayment()">
+                    <i class="lucide lucide-check"></i>
+                    Complete
+                </button>
+            </div>
+        </div>
+    </main>
+
+    <!-- Bottom Navigation -->
+    <nav class="bottom-nav">
+        <button class="nav-item">
+            <i class="lucide lucide-home"></i>
+            <span>Home</span>
+        </button>
+        <button class="nav-item active">
+            <i class="lucide lucide-credit-card"></i>
+            <span>Payments</span>
+        </button>
+        <button class="nav-item">
+            <i class="lucide lucide-file-text"></i>
+            <span>Receipts</span>
+        </button>
+        <button class="nav-item">
+            <i class="lucide lucide-user"></i>
+            <span>Profile</span>
+        </button>
+    </nav>
+
+    <!-- Payment Method Selection Modal -->
+    <div class="modal" id="paymentMethodModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Select Payment Method</h2>
+                <button class="modal-close" onclick="closePaymentModal()">
+                    <i class="lucide lucide-x"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="payment-options-grid">
+                    <button class="payment-option-modal" onclick="selectMethod('upi')">
+                        <div class="option-icon upi">
+                            <i class="lucide lucide-smartphone"></i>
+                        </div>
+                        <h4>UPI Payment</h4>
+                        <p>Pay using UPI apps</p>
+                    </button>
+                    
+                    <button class="payment-option-modal" onclick="selectMethod('card')">
+                        <div class="option-icon card">
+                            <i class="lucide lucide-credit-card"></i>
+                        </div>
+                        <h4>Credit/Debit Card</h4>
+                        <p>Visa, Mastercard, RuPay</p>
+                    </button>
+                    
+                    <button class="payment-option-modal" onclick="selectMethod('netbanking')">
+                        <div class="option-icon netbanking">
+                            <i class="lucide lucide-building-2"></i>
+                        </div>
+                        <h4>Net Banking</h4>
+                        <p>Direct bank transfer</p>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Help Modal -->
+    <div class="modal" id="helpModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Need Help?</h2>
+                <button class="modal-close" onclick="closeHelpModal()">
+                    <i class="lucide lucide-x"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="help-content">
+                    <h3>Common Issues</h3>
+                    <div class="help-item">
+                        <h4>Payment not going through?</h4>
+                        <p>Make sure you have sufficient balance and stable internet connection.</p>
+                    </div>
+                    <div class="help-item">
+                        <h4>Can't find UPI option?</h4>
+                        <p>Try refreshing the page or use the QR code option.</p>
+                    </div>
+                    <div class="help-item">
+                        <h4>Need to save payment method?</h4>
+                        <p>Currently, we don't save payment methods for security reasons.</p>
+                    </div>
+                </div>
+                
+                <div class="contact-info">
+                    <h3>Contact Support</h3>
+                    <button class="contact-btn">
+                        <i class="lucide lucide-phone"></i>
+                        Call Support: +91 98765 43210
+                    </button>
+                    <button class="contact-btn">
+                        <i class="lucide lucide-mail"></i>
+                        Email: support@etherschool.com
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Success Animation -->
+    <div class="success-animation" id="successAnimation">
+        <div class="confetti"></div>
+        <div class="success-message">
+            <i class="lucide lucide-check-circle"></i>
+            <h2>Payment Successful!</h2>
+        </div>
+    </div>
+
+    <script src="parent-script.js"></script>
+</body>
+</html>
